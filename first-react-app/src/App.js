@@ -34,12 +34,21 @@ function App() {
     return `${firstName} ${lastName}`;
   };
   const placeholder = "enter your details";
+  const BlogObj = {
+    title : "Blog Title 1",
+    description : "lorem epsum dolor lorem epsum dolor lorem epsum dolor lorem epsum dolor lorem epsum dolor "
+  };
   return (
     <div className="App">
       <h3>Full Name : {getfullname(firstName, lastName)}</h3>
       <p>Age : {age}</p>
       <p>Job : {Job}</p>
       <input placeholder={placeholder}></input>
+      <hr></hr>
+      <div>
+        <h3>{BlogObj.title}</h3>
+        <p>{BlogObj.description}</p>
+      </div>
     </div>
   );
 }
