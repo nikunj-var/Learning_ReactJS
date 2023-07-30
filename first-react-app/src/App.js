@@ -1,6 +1,6 @@
-import logo from "./logo.svg";
-import "./App.css";
 
+import "./App.css";
+import BlogCard from "./BlogCard";
 function App() {
   // without using variables
   // return <div className="App">
@@ -80,6 +80,11 @@ function App() {
       </div>
     );
   });
+
+  // using functional component
+  const blogCards2 = blogarr.map((item, pos) => {
+    return <BlogCard key="pos" />;
+  });
   return (
     <div className="App">
       {/* adding styles - Internal styles */}
@@ -119,6 +124,12 @@ function App() {
 
       {/* generating components dynamically */}
       {blogCards}
+
+      <hr></hr>
+      <hr></hr>
+
+      {/* using functional component */}
+      {blogCards2}
     </div>
   );
 }
