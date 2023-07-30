@@ -1,6 +1,6 @@
-
 import "./App.css";
 import BlogCard from "./BlogCard";
+import BlogCard2 from "./BlogCard2";
 function App() {
   // without using variables
   // return <div className="App">
@@ -85,6 +85,11 @@ function App() {
   const blogCards2 = blogarr.map((item, pos) => {
     return <BlogCard key="pos" />;
   });
+
+  // passing data to components using props and this data is treated as argument
+  const blogCards3 = blogarr.map((item, pos) => {
+    return <BlogCard2 title={item.title} description={item.description} />;
+  });
   return (
     <div className="App">
       {/* adding styles - Internal styles */}
@@ -98,6 +103,7 @@ function App() {
           boxShadow: "0 2px 5px #ccc",
         }}
       >
+        <h1>using functions</h1>
         <h3>Full Name : {getfullname(firstName, lastName)}</h3>
         <p>Age : {age}</p>
         <p>Job : {Job}</p>
@@ -108,6 +114,7 @@ function App() {
 
       {/* adding internal css using variables */}
       <div style={styles}>
+        <h1>adding internal css using variables</h1>
         <h3>{BlogObj.title}</h3>
         <p>{BlogObj.description}</p>
       </div>
@@ -116,6 +123,7 @@ function App() {
 
       {/* giving styles using external css */}
       <div className="blogcard">
+        <h1>giving styles using external css</h1>
         <h3>{BlogObj.title}</h3>
         <p>{BlogObj.description}</p>
       </div>
@@ -123,13 +131,21 @@ function App() {
       <hr></hr>
 
       {/* generating components dynamically */}
+      <h1>generating components dynamically</h1>
       {blogCards}
 
       <hr></hr>
       <hr></hr>
 
       {/* using functional component */}
+      <h1>using functional component</h1>
       {blogCards2}
+
+      <hr></hr>
+      <hr></hr>
+      {/* passing data to components and this data is treated as argument */}
+      <h1>passing data to components and this data is treated as argument</h1>
+      {blogCards3}
     </div>
   );
 }
