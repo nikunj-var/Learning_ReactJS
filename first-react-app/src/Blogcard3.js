@@ -1,10 +1,8 @@
 import React from "react";
 
-import xyz from "./blogcard.module.css";
-
 const BlogCard = () => {
   return (
-    <div className={xyz.newblogcard}>
+    <div className="blogcard">
       <h3>Blog Title</h3>
       <p>Blog Description</p>
     </div>
