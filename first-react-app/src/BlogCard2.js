@@ -12,3 +12,5 @@ const BlogCard2 = (properties) => {
 };
 
 export default BlogCard2;
+
+
