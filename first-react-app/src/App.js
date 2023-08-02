@@ -163,37 +163,32 @@ class App extends Component {
   // no need to write const,let,var
   state = {
     showBlogs: true,
+    blogarr1: [
+      {
+        id: 1,
+        title: "Blog Title 3",
+        description:
+          "lorem epsum dolor lorem epsum dolor lorem epsum dolor lorem epsum dolor lorem epsum dolor ",
+        likecount: 0,
+      },
+      {
+        id: 2,
+        title: "Blog Title 4",
+        description:
+          "lorem epsum dolor lorem epsum dolor lorem epsum dolor lorem epsum dolor lorem epsum dolor ",
+        likecount: 0,
+      },
+      {
+        id: 3,
+        title: "Blog Title 5",
+        description:
+          "lorem epsum dolor lorem epsum dolor lorem epsum dolor lorem epsum dolor lorem epsum dolor ",
+        likecount: 0,
+      },
+    ],
   };
-  blogarr1 = [
-    {
-      id: 1,
-      title: "Blog Title 3",
-      description:
-        "lorem epsum dolor lorem epsum dolor lorem epsum dolor lorem epsum dolor lorem epsum dolor ",
-    },
-    {
-      id: 2,
-      title: "Blog Title 4",
-      description:
-        "lorem epsum dolor lorem epsum dolor lorem epsum dolor lorem epsum dolor lorem epsum dolor ",
-    },
-    {
-      id: 3,
-      title: "Blog Title 5",
-      description:
-        "lorem epsum dolor lorem epsum dolor lorem epsum dolor lorem epsum dolor lorem epsum dolor ",
-    },
-  ];
 
-  BlogCard = this.blogarr1.map((item) => {
-    return (
-      <BlogCard2
-        title={item.title}
-        description={item.description}
-        id={item.id}
-      />
-    );
-  });
+  
   onHideBtnClick = () => {
     let updatedstate = !this.state.showBlogs;
     // this.setState({
@@ -208,7 +203,26 @@ class App extends Component {
       };
     });
   };
+  onLikeBtnClick = (pos) => {
+    const updateBlogList = this.state.blogarr1;
+    const updateBlogObj = updateBlogList[pos];
+    updateBlogObj.likecount = updateBlogObj.likecount + 1;
+    updateBlogList[pos] = updateBlogObj;
+    this.setState({ blogarr1: updateBlogList });
+  };
   render() {
+    const BlogCard = this.state.blogarr1.map((item, pos) => {
+      return (
+        <BlogCard2
+          title={item.title}
+          description={item.description}
+          id={item.id}
+          likecount={item.likecount}
+          onLikeBtnClick={() => this.onLikeBtnClick(pos)}
+        />
+      );
+    });
+  
     return (
       <div className="App">
         <h1>learning classbased components</h1>
@@ -218,7 +232,7 @@ class App extends Component {
         <button onClick={this.onHideBtnClick}>
           {this.state.showBlogs ? "Hide List" : "Show List"}
         </button>
-        {this.state.showBlogs ? this.BlogCard : null}
+        {this.state.showBlogs ? BlogCard : null}
       </div>
     );
   }
