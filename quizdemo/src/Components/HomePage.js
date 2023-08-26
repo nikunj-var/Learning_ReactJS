@@ -1,44 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./HomePage.css";
-import firebase from "firebase/compat/app";
 import "firebase/database";
-import { getDatabase, ref, get } from "firebase/database";
-import { initializeApp } from "firebase/app";
+import db from "./FireBaseConfig";
+import { useHistory } from "react-router-dom";
+import HelloPage from "./HelloPage";
 
 function HomePage({ history }) {
-  const firebaseConfig = {
-    apiKey: "AIzaSyDYAQX0JtBn45jR-OOiUNcXTN4fggjpODE",
-    authDomain: "storingquiz.firebaseapp.com",
-    databaseURL: "https://storingquiz-default-rtdb.firebaseio.com",
-    projectId: "storingquiz",
-    storageBucket: "storingquiz.appspot.com",
-    messagingSenderId: "816326310890",
-    appId: "1:816326310890:web:bf5efb7879d710563d9093",
-  };
-  const app = initializeApp(firebaseConfig);
+  const [datataken, setData] = useState([]);
 
-  const database = getDatabase(app);
   const [number, setNumber] = useState("");
+  const [dataList, setDataList] = useState([]); 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Initialize Firebase
-    const trimmedNumber = number.trim();
-    const numberRef = ref(database, "numbers/" + trimmedNumber);
-    console.log(numberRef);
-    // Check if the number exists in Firebase
-    try {
-      const snapshot = await get(numberRef);
-      if (snapshot.exists()) {
-        history.push("/hello");
-      } else {
-        alert("Number not found in Firebase.");
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      alert("An error occurred while fetching data.");
+  useEffect(() => {
+    db.collection("quiz").onSnapshot((snapshot) => {
+      const newDataList = snapshot.docs.map((doc) => doc.data().data);
+      setDataList(newDataList); 
+      setData(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data().data,
+        }))
+      );
+    });
+  }, []);
+  const checknumber = async () => {
+    if (dataList.includes(number)) {
+      
+      {<HelloPage/>}
+    } else {
+     
     }
   };
 
@@ -60,13 +51,30 @@ function HomePage({ history }) {
 
       <div className="main-item">
         <input
-          type="text"
+          type="number"
           placeholder="Enter code here"
           className="inputtext"
           onChange={(e) => setNumber(e.target.value)}
         />
-        <button onClick={handleSubmit}>START QUIZ</button>
+        <button onClick={checknumber}>START QUIZ</button>
       </div>
+      <table>
+          <thead>
+            <tr>
+              <th scope="col">Data</th>
+            </tr>
+          </thead>
+          <tbody>
+            {dataList.map((data) => {
+              return (
+                <tr >
+                  <th>{data}</th>
+                 
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
     </div>
   );
 }

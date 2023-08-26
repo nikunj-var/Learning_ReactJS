@@ -7,14 +7,20 @@ function App() {
   const [todos, setTodos] = useState([]);
 
   //function to fetch data from database
-  useEffect(()=>{
-    db.collection('todos').orderBy("timestamp","desc").onSnapshot(
-      snapshot =>{
-        console.log(snapshot);
-      }
-    )
-  })
-
+  useEffect(() => {
+    db.collection("todo")
+      .orderBy("timestamp", "desc")
+      .onSnapshot((snapshot) => {
+        setTodos(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            todo: doc.data().todo,
+            timestamp: doc.data().timestamp,
+          }))
+        );
+      });
+  }, []);
+  console.log(todos);
   // creating function to add data in firewase
   const addToDo = (e) => {
     e.preventDefault();
@@ -35,7 +41,12 @@ function App() {
             onChange={(e) => setInput(e.target.value)}
             value={input}
           />
-          <button type="submit" className="btn btn-primary" onClick={addToDo}>
+          <button
+            type="submit"
+            disabled={!input}
+            className="btn btn-primary"
+            onClick={addToDo}
+          >
             ADD TODO
           </button>
         </form>
@@ -51,16 +62,43 @@ function App() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th>1</th>
-              <th>HELLO</th>
-              <th>
-                <button className="btn btn-success">UPDATE</button>
-              </th>
-              <th>
-                <button className="btn btn-danger">DELETE</button>
-              </th>
-            </tr>
+            {todos.map((todo) => {
+              return (
+                <tr key={todo.id}>
+                  <th>{todo.id}</th>
+                  <th>{todo.todo}</th>
+                  <th>
+                    <button
+                      className="btn btn-success"
+                      disabled={!input}
+                      onClick={() => {
+                        db.collection("todo").doc(todo.id).update(
+                          {
+                            todo: input,
+                            timestamp:
+                              firebase.firestore.FieldValue.serverTimestamp(),
+                          }
+              
+                        );
+                        setInput('');
+                      }}
+                    >
+                      Update
+                    </button>
+                  </th>
+                  <th>
+                    <button
+                      className="btn btn-danger"
+                      onClick={(e) => {
+                        db.collection("todo").doc(todo.id).delete();
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </th>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

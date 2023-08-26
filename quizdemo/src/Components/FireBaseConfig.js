@@ -1,20 +1,19 @@
-// src/firebaseConfig.js
-
+// src/firebaseConfig.jsimport "firebase/compat/firestore";
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 
-
 const firebaseConfig = {
-    apiKey: "AIzaSyDYAQX0JtBn45jR-OOiUNcXTN4fggjpODE",
-    authDomain: "storingquiz.firebaseapp.com",
-    databaseURL: "https://storingquiz-default-rtdb.firebaseio.com",
-    projectId: "storingquiz",
-    storageBucket: "storingquiz.appspot.com",
-    messagingSenderId: "816326310890",
-    appId: "1:816326310890:web:bf5efb7879d710563d9093",
+  apiKey: "AIzaSyBs4-1KdtY1xaXLOe6QMagHLNwMSu03wL0",
+  authDomain: "quiz-740fb.firebaseapp.com",
+  projectId: "quiz-740fb",
+  storageBucket: "quiz-740fb.appspot.com",
+  messagingSenderId: "510220594975",
+  appId: "1:510220594975:web:6b9d0299a46d12fdbc4a2a",
+  measurementId: "G-LPCS4J0PYY"
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 
-export const firestore = firebase.firestore();
+const db = firebaseApp.firestore();
+export default db;

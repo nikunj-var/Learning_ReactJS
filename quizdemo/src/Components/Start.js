@@ -1,9 +1,9 @@
 // Start.js
 import React from "react";
 import "./HomePage.css";
-import TextField from "./TextField";
+import GenerateQuiz from "./Generatequiz";
 function Start() {
-  return <TextField />;
+  return <GenerateQuiz />;
 }
 
 export default Start;
