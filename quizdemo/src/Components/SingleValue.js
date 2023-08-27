@@ -35,7 +35,7 @@ const SingleValue = () => {
   return (
     <div className="main-item">
       <h1>Generate Code</h1>
-      <input type="number" value={data} placeholder="produce code" />
+      <input type="number" value={data} placeholder="******" />
       <button
         onClick={() => {
           const min = 100000;

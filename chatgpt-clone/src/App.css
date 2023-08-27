@@ -1,0 +1,52 @@
+body{
+  background-color: rgb(96, 90, 90);
+  color: white;
+}
+.App {
+  text-align: center;
+  background-color: rgb(94, 90, 90);
+  color: white;
+}
+
+.main-grid{
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 15px;
+  margin-top: 50px;
+}
+.grid-child{
+  border: 1px solid whitesmoke;
+  border-radius: 15px;
+  padding: 10px;
+  cursor: pointer;
+}
+.grid-child:hover{
+  background-color: rgb(174, 158, 158);
+  color: #212121;
+}
+.grid-child h3{
+  font-family: Poppins;
+  font-weight: 600;
+}
+.grid-child p{
+  font-family: Poppins;
+ 
+  font-size: 15px;
+}
+
+.translation-box{
+  display: flex;
+  flex-direction: column;
+}
+.textarea{
+  margin-top: 50px;
+  font-size: 15px;
+  padding: 10px;
+}
+.action-btn{
+  width: 200px;
+  height: 50px;
+  margin-top: 10px;
+  cursor: pointer;
+  margin: auto;
+}

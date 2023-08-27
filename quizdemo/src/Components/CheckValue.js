@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import HelloPage from "./HelloPage";
 
 function HomePage() {
-  const [enteredcode, setEnteredCode] = useState();
+  const [enteredcode, setEnteredCode] = useState("");
   const [enteredname, setEnteredname] = useState("");
   const [dataList, setDataList] = useState("");
   const [flag, setflag] = useState(false);
@@ -19,10 +19,11 @@ function HomePage() {
   }, []);
   const adddetails = (e) => {
     e.preventDefault();
-    console.log(enteredcode);
-    console.log(dataList[0]);
-    if (enteredcode === dataList[0]) {
-      db.collection("student3").add({
+    console.log(typeof enteredcode);
+    console.log(typeof dataList[0]);
+    dataList[0] = dataList[0].toString();
+    if (dataList.length > 0 && enteredcode === dataList[0]) {
+      db.collection("student4").add({
         code: enteredcode,
         name: enteredname,
       });
@@ -30,6 +31,8 @@ function HomePage() {
     } else {
       alert("you entered wrong code");
     }
+    console.log(typeof enteredcode);
+    console.log(typeof dataList[0]);
 
     setEnteredCode("");
     setEnteredname("");
@@ -40,7 +43,7 @@ function HomePage() {
       <nav>
         <ul>
           <li>
-            <Link to="/newpage">
+            <Link to="/">
               <img
                 className="img"
                 src="https://cdn-icons-png.flaticon.com/256/11826/11826847.png"
@@ -69,8 +72,7 @@ function HomePage() {
             setEnteredname(e.target.value);
           }}
         />
-          <button onClick={adddetails}>START QUIZ</button>
-
+        <button onClick={adddetails}>START QUIZ</button>
       </div>
     </div>
   );

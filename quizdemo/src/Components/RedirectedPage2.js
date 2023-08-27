@@ -5,7 +5,7 @@ import db from "./FireBaseConfig";
 function RedirectedPage() {
   const [dataList, setDataList] = useState([]);
   useEffect(() => {
-    db.collection("student3").onSnapshot((snapshot) => {
+    db.collection("student4").onSnapshot((snapshot) => {
       setDataList(
         snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -17,10 +17,10 @@ function RedirectedPage() {
   }, []);
   return (
     <div className="main-item">
-        <nav>
+      <nav>
         <ul>
           <li>
-            <Link to="/Single">
+            <Link to="/checkvalue">
               <img
                 className="img"
                 src="https://cdn-icons-png.flaticon.com/256/11826/11826847.png"
@@ -30,7 +30,7 @@ function RedirectedPage() {
           </li>
         </ul>
       </nav>
-      <table>
+      <table className="table">
         <thead>
           <tr>
             <th scope="col">Code</th>
