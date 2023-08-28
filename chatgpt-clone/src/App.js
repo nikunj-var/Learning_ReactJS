@@ -3,45 +3,38 @@ import OptionSelection from "./Components/OptionSelection";
 import arrayItems from "./AIOptions/index";
 import Translation from "./Components/Translation";
 import { useState } from "react";
-import { Configuration, OpenAIApi } from "openai";
-import OpenAI from "openai";
-import ChatComponent from "./Components/CheckApi";
+import { NlpManager } from "node-nlp"; 
 
 function App() {
-    const [option, setoption] = useState({});
-    const selectoption = (option) => {
-      setoption(option);
-    };
-    const [input, setInput] = useState("");
-    const [result, setResult] = useState("");
-    const doStuff = async () => {
-      console.log("Input:", input);
-      const message = [
-        { role: "system", content: "You are a helpful assistant." },
-        { role: "user", content: input },
-      ];
+  const [option, setoption] = useState({});
+  const selectoption = (option) => {
+    setoption(option);
+  };
 
-      const requestOptions = {
-        ...option,
-        messages: message,
-      };
+  const [input, setInput] = useState("");
+  const [result, setResult] = useState("");
+  const manager = new NlpManager();
 
-      const response = await openai.chat.completions.create(requestOptions);
-      setResult(response.data.choices[0].text);
-      console.log("Result", result);
-    };
-    const openai = new OpenAI({
-      apiKey: "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",
-      dangerouslyAllowBrowser: true,
-    });
-    console.log(option);
-    return (
-      <div className="App">
-        {Object.values(option).length === 0 ? (
-          <OptionSelection arrayItem={arrayItems} selectoption={selectoption} />
-        ) : (
-          <Translation doStuff={doStuff} setInput={setInput} result={result} />
-        )}
+  // Add training data for the NLP manager (you can customize this)
+  manager.addDocument("en", "tell me about yourself", "greeting.about");
+
+  const doStuff = async () => {
+    console.log("Input:", input);
+
+    // Process input using nlp.js
+    const response = await manager.process("en", input);
+
+    // Handle response (you can customize this)
+    setResult(JSON.stringify(response, null, 2));
+  };
+   
+  return (
+    <div className="App">
+      {Object.values(option).length === 0 ? (
+        <OptionSelection arrayItem={arrayItems} selectoption={selectoption} />
+      ) : (
+        <Translation doStuff={doStuff} setInput={setInput} result={result} />
+      )}
     </div>
   );
 }
